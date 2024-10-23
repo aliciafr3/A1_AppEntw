@@ -1,3 +1,5 @@
+name: main
+
 on:
   push:
     branches:
@@ -28,7 +30,7 @@ jobs:
 
       - name: Test Aggregate Endpoint
         run: |
-          sleep 30 
+          sleep 30  
           curl -f http://localhost:8081/api/aggregate
 
       - name: Stop Docker containers
