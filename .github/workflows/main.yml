@@ -28,7 +28,7 @@ jobs:
 
       - name: Test Aggregate Endpoint
         run: |
-          sleep 30  # Wait for services to be fully up
+          sleep 30 
           curl -f http://localhost:8081/api/aggregate
 
       - name: Stop Docker containers
