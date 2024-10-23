@@ -1,2 +1,37 @@
-  on:
-  jobs:
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Build Docker image
+        run: docker-compose build
+
+      - name: Run Docker containers
+        run: docker-compose up -d
+
+      - name: Test Aggregate Endpoint
+        run: |
+          sleep 30  # Wait for services to be fully up
+          curl -f http://localhost:8081/api/aggregate
+
+      - name: Stop Docker containers
+        run: docker-compose down
