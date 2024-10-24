@@ -1,15 +1,12 @@
-version: '3.8'
-
 services:
-  assessment_service:
+  assessment:
     image: mrksdh/assessment
     ports:
       - "8080:8080"
+
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8081:8080"
+    build: .
     depends_on:
-      - assessment_service
+      - assessment
+    environment:
+      - ASSESSMENT_HOST=assessment
